@@ -16,6 +16,14 @@
         };
         myEmacs = pkgs.emacsWithPackages (epkgs: with epkgs; [
           # List your packages here
+          helm
+          projectile
+          flycheck
+          company
+          yasnippet
+          doom-themes
+          org-roam
+          doom-modeline
           magit
           org-roam
 	        nix-mode
@@ -23,8 +31,6 @@
           ob-elixir
           # ob-coq
           page-break-lines
-          flycheck
-          company
           auto-complete
           cl-lib
         ]);

@@ -1,7 +1,3 @@
-(add-to-list 'load-path "~/emacs-which-key/which-key.el")
-(require 'which-key)
-(which-key-mode)
-
 ;;(add-to-list 'load-path "~/org-mode/lisp")
 
 (setq org-agenda-files '("~/Exocortex"))
@@ -272,7 +268,11 @@
 (setq shell-file-name "bash")
 (setq shell-command-switch "-ic")
 
-(setq yas-snippet-dirs '("snippets"))
+(use-package yasnippet
+  :ensure t
+  :config
+  (yas-global-mode 1))
+(setq yas-snippet-dirs '("~/FutureProofDotfiles/snippets"))
 
 (setq history-delete-duplicates t)
 
@@ -367,3 +367,37 @@ of FILE in the current directory, suitable for creation"
 
 ;;(defun file_in_docker
 ;;    find-file "/docker:drcoeurjoly@dev_dev_rhel7_1:/")
+
+(use-package magit
+  :ensure t)
+(use-package helm
+  :ensure t
+  :config
+  (helm-mode 1))
+(use-package ivy
+  :ensure t
+  :config
+  (ivy-mode 1))
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode +1))
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+(use-package company
+  :ensure t
+  :config
+  (global-company-mode))
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-one t))
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+(add-hook 'window-setup-hook 'toggle-frame-fullscreen)
