@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: ssharchitect
-# key: ssharchitect
-# --
-#+begin_src sh :dir /sshx:architect@10.5.3.18:~/ :results verbatim
-$0
-#+end_src

@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-#name : piperrors
-#key : piperrors
-#contributor : Roland Coeurjoly
-# --
-2>&1 | cat

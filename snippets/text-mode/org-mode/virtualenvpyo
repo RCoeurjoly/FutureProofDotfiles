@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-#name : virtualenvpyo
-#key : virtualenvpyo
-#contributor : Roland Coeurjoly
-# --
-#+begin_src python  :results output :session $1
-# -*- coding: utf-8 -*-
-$2
-#+end_src

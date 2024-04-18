@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-#name : tagsroam
-#key : tagsroam
-#contributor : Roland Coeurjoly
-# --
-- tags :: $1

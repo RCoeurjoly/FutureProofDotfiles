@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-#name : shell
-#key : shell
-#contributor : Roland Coeurjoly
-# --
-#+begin_src shell :shebang #!/bin/bash -i :results output
-$0
-#+end_src

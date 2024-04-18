@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-#name : literateshell
-#key : literateshell
-#contributor : Roland Coeurjoly
-# --
-#+NAME: $1
-#+begin_src shell :noweb yes :exports code
-$2
-#+end_src
