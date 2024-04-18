@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : myomscommon
+#key : myomscommon
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :database omscommon
+#+header: :dbhost db
+#+begin_src sql :exports both
+$0
+#+end_src

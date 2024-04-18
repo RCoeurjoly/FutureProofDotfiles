@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : dockertestcluster
+#key : dockertestcluster
+#contributor : Roland Coeurjoly
+# --
+#+begin_src sh :dir /docker:root@app-deploy_dockerized_test_cluster_1:/ :results verbatim
+$0
+#+end_src

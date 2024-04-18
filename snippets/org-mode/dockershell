@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : dockershell
+#key : dockershell
+#contributor : Roland Coeurjoly
+# --
+#+begin_src sh :dir /docker:drcoeurjoly@dev_dev_rhel7_1:~/ :results verbatim
+source ~/.bashrc
+source ~/.bashrc.d/config.bash
+$1
+#+end_src

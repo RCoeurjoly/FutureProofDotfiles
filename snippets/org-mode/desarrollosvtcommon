@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : desarrollosvtcommon
+#key : desarrollosvtcommon
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :database svtcommon
+#+header: :dbhost 10.0.9.150
+#+begin_src sql :exports both
+$0
+#+end_src

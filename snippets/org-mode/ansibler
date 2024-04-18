@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : ansibler
+#key : ansibler
+#contributor : Roland Coeurjoly
+# --
+#+begin_src sh :dir /docker:root@app-deploy_ansibler_1:/ :results verbatim
+$1
+#+end_src

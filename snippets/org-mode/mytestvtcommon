@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : mytestvtcommon
+#key : mytestvtcommon
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :database testrd_vtcommon
+#+header: :dbhost db
+#+begin_src sql :exports both
+$0
+#+end_src

@@ -271,8 +271,9 @@
 (use-package yasnippet
   :ensure t
   :config
-  (yas-global-mode 1))
-(setq yas-snippet-dirs '("~/FutureProofDotfiles/snippets"))
+  (setq yas-snippet-dirs '("~/FutureProofDotfiles/snippets"))  ; Set snippet directory
+  (yas-reload-all)  ; Reload the snippets after setting the directory
+  (yas-global-mode 1))  ; Enable Yasnippet globally
 
 (setq history-delete-duplicates t)
 
@@ -391,8 +392,8 @@ of FILE in the current directory, suitable for creation"
   :init (global-flycheck-mode))
 (use-package company
   :ensure t
-  :config
-  (global-company-mode))
+  :init
+  (global-company-mode 1))
 (use-package doom-themes
   :ensure t
   :config

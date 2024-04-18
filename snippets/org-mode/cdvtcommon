@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : cdvtcommon
+#key : cdvtcommon
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser test
+#+header: :dbpassword testpass
+#+header: :dbhost 10.0.7.1
+#+header: :database cdvtcommon
+#+begin_src sql :exports both
+$0
+#+end_src

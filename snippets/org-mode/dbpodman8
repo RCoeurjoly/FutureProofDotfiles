@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : dbpodman
+#key : dbpodman
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :dbhost 10.0.9.242
+#+header: :dbport 50603
+#+begin_src sql :exports both
+$0
+#+end_src

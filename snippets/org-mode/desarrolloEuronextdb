@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : desarrolloEuronextDB
+#key : desarrolloEuronextDB
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :dbhost 10.0.9.194
+#+header: :database seurn1
+#+begin_src sql :exports both
+$0
+#+end_src

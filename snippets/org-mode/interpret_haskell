@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : interpret_haskell
+#key : interpret_haskell
+#contributor : Roland Coeurjoly
+# --
+#+begin_src haskell :results output
+$0
+#+end_src
