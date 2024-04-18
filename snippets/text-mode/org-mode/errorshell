@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : errorshell
+#key : errorshell
+#contributor : Roland Coeurjoly
+# --
+#+begin_src shell :shebang #!/bin/bash -i :results output
+exec 2>&1
+$0
+:
+#+end_src

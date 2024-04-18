@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : ocaml
+#key : ocaml
+#contributor : Roland Coeurjoly
+# --
+#+begin_src ocaml
+$0
+#+end_src

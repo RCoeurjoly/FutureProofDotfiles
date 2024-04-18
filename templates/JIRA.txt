@@ -1,0 +1,40 @@
+* TODO [[eww:https://jira-inntech.grupobme.es/jira/si/jira.issueviews:issue-html/%^{JIRA code}/%^{JIRA code}.html][%^{JIRA code}]] [%]
+  :PROPERTIES:
+  :COOKIE_DATA: todo recursive
+  :END:
+** Actions
+*** TODO_NEXT Crear WIP MR
+#+begin_src shell :shebang #!/bin/bash -i :results output
+exec 2>&1
+python ~/dotfiles/JIRA_to_path.py %^{JIRA code} >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+    echo "Please fill corresponding path for %^{JIRA code}"
+else
+    cd $(python ~/dotfiles/JIRA_to_path.py %^{JIRA code})
+    if [ $? -ne 0 ]; then
+        echo "Please fill a valid corresponding path for %^{JIRA code}"
+    else
+        git checkout master && \
+        git pull && \
+        git checkout -b %^{JIRA code} && \
+        git push -u origin %^{JIRA code}
+    fi
+fi
+:
+#+end_src
+
+*** WAIT Crear informe de resolución
+*** WAIT Sacar version
+**** WAIT Etiquetar y pushear
+**** WAIT Crear release
+**** WAIT Asignarle la release a Val
+** Informe de resolución
+   #+OPTIONS: ^:nil toc:10
+   #+SUBTITLE: %^{JIRA code}
+   #+EXPORT_FILE_NAME: Informe_de_resolución_%^{JIRA code}.html
+ [[eww:https://jira-inntech.grupobme.es/jira/browse/%^{JIRA code}][%^{JIRA code} en JIRA]]
+*** Acciones realizadas
+*** Análisis de impacto
+*** Pruebas sugeridas y evidencias
+** Relevant information
+*** Stream of Consciousness

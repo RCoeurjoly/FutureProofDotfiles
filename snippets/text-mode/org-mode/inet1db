@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : inet1db
+#key : inet1db
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser test
+#+header: :dbpassword testpass
+#+header: :dbhost 10.0.7.15
+#+header: :database cdirf1
+#+begin_src sql :exports both
+$0
+#+end_src

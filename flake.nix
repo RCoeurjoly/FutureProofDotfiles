@@ -18,17 +18,26 @@
           # List your packages here
           magit
           org-roam
-	  nix-mode
+	        nix-mode
+          which-key
+          ob-elixir
+          # ob-coq
+          page-break-lines
+          flycheck
+          company
+          auto-complete
+          cl-lib
         ]);
       in {
-        devShell = pkgs.mkShell {
+        devShells = pkgs.mkShell {
           buildInputs = [ myEmacs ];
         };
 	# Define the application
-        apps.emacs = {
+        apps.default = {
           type = "app";
           program = "${myEmacs}/bin/emacs";
+          args = [ "--load" "${./.}/init.el" ];
         };
-	# apps.${system}.default = { type = "app"; program = myEmacs; };
+        # appp.${system} = apps.emacs;
       });
 }

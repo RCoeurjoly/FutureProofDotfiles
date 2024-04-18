@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : myinettestvtcommon
+#key : myinettestvtcommon
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :database test_inetdrv_vtcommon
+#+header: :dbhost db
+#+begin_src sql :exports both
+$0
+#+end_src

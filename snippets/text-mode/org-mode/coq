@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+#name : coq
+#key : coq
+#contributor : Roland Coeurjoly
+# --
+#+begin_src coq :exports results
+Reset Initial.
+Reset test.
+Unset Silent.
+$0
+#+end_src

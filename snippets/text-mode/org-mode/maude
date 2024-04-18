@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+#name : maude
+#key : maude
+#contributor : Roland Coeurjoly
+# --
+#+begin_src maude
+$0
+#+end_src

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+#name : pyout
+#key : pyout
+#contributor : Roland Coeurjoly
+# --
+#+begin_src python :results output
+# -*- coding: utf-8 -*-
+$0
+#+end_src

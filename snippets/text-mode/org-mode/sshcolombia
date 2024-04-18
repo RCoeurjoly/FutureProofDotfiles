@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: sshcolombia
+# key: sshcolombia
+# --
+#+begin_src sh :dir /sshx:ffjimenez@10.0.7.241:~/ :results verbatim
+source ~/.bashrc
+$0
+#+end_src

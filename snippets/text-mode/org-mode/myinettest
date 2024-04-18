@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+#name : myinettest
+#key : myinettest
+#contributor : Roland Coeurjoly
+# --
+#+header: :engine mysql
+#+header: :dbuser root
+#+header: :dbpassword redhatbolsa
+#+header: :database test_inetdrv_drvdb
+#+header: :dbhost db
+#+begin_src sql :exports both
+$0
+#+end_src
