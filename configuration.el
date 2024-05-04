@@ -1,5 +1,3 @@
-;;(add-to-list 'load-path "~/org-mode/lisp")
-
 (setq org-agenda-files '("~/Exocortex"))
 
 (custom-set-variables
@@ -356,9 +354,14 @@ of FILE in the current directory, suitable for creation"
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(find-file "~/Exocortex/20200916104516-now.org")
-(org-roam-db-sync)
-(org-roam-buffer-toggle)
+(defun my/emacs-start-operations ()
+  "Open specific org file and initialize Org Roam features."
+  (find-file "~/Exocortex/20200916104516-now.org")
+  (org-roam-db-sync)
+  (org-roam-buffer-toggle))
+
+(add-hook 'emacs-startup-hook 'my/emacs-start-operations)
+(setq inhibit-startup-screen t)
 
 (setq ediff-diff-options "-w")
 (setq diff-switches "-u --ignore-space-change")

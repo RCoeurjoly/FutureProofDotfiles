@@ -4,11 +4,6 @@
 #+OPTIONS: toc:nil num:nil
 
 * Org mode
-** Itself
-   #+begin_src emacs-lisp
-;;(add-to-list 'load-path "~/org-mode/lisp")
-   #+end_src
-
 ** Agenda
    #+begin_src emacs-lisp
 (setq org-agenda-files '("~/Exocortex"))
@@ -598,9 +593,14 @@ of FILE in the current directory, suitable for creation"
 #+END_SRC
 * Load file upon startup
 #+BEGIN_SRC emacs-lisp
-(find-file "~/Exocortex/20200916104516-now.org")
-(org-roam-db-sync)
-(org-roam-buffer-toggle)
+(defun my/emacs-start-operations ()
+  "Open specific org file and initialize Org Roam features."
+  (find-file "~/Exocortex/20200916104516-now.org")
+  (org-roam-db-sync)
+  (org-roam-buffer-toggle))
+
+(add-hook 'emacs-startup-hook 'my/emacs-start-operations)
+(setq inhibit-startup-screen t)
 #+END_SRC
 * Diff
   #+begin_src emacs-lisp
@@ -656,4 +656,3 @@ of FILE in the current directory, suitable for creation"
   :init (doom-modeline-mode 1))
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen)
 #+end_src
-
