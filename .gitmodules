@@ -1,0 +1,3 @@
+[submodule "dependencies/cucumber.el"]
+	path = dependencies/cucumber.el
+	url = git@github.com:michaelklishin/cucumber.el.git

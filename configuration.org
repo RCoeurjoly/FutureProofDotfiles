@@ -295,7 +295,7 @@ Insertion of code blocks
 (global-page-break-lines-mode 0)
 (setq org-roam-v2-ack t)
    #+end_src
-
+*** Keybindings
 ** Visual
     I like seeing a little downward-pointing arrow instead of the usual ellipsis
    (=...=) that org displays when there's stuff under a header.
@@ -304,6 +304,8 @@ Insertion of code blocks
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 ;;(setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
 ;;(setq org-bullets-bullet-list '("甲" "乙" "丙" "丁" "戊" "己" "庚" "辛" "壬" "癸"))
 (setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨" "⑩" "⑪" "⑫" "⑬" "⑭" "⑮" "⑯" "⑰" "⑱" "⑲" "⑳"))
@@ -531,7 +533,11 @@ pairing or presenting code.
 (fset 'replace-binary-fix-separators
    (kmacro-lambda-form [?\M-x ?r ?e ?p ?l ?a ?c ?e ?- ?s ?t ?r ?i ?n ?g return ?^ ?A return ?\C-x ?8 return down return return] 0 "%d"))
     #+end_src
+*** Cucumber
 
+#+begin_src emacs-lisp
+(add-to-list 'load-path "~/FutureProofDotfiles/dependencies/cucumber.el")
+#+end_src
 ** General
    I use a few packages in virtually every programming or writing environment to manage the project, handle auto-completion, search for terms, and deal with version control. That's all in here.
 *** =flycheck=

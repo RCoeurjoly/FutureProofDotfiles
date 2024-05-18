@@ -33,6 +33,7 @@
           page-break-lines
           auto-complete
           cl-lib
+          org-bullets
         ]);
       in {
         devShells = pkgs.mkShell {

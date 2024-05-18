@@ -196,9 +196,11 @@
 
 (setq org-ellipsis "⤵")
 
-;;(setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(setq org-bullets-bullet-list '("■" "◆" "▲" "▶"))
 ;;(setq org-bullets-bullet-list '("甲" "乙" "丙" "丁" "戊" "己" "庚" "辛" "壬" "癸"))
-(setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨" "⑩" "⑪" "⑫" "⑬" "⑭" "⑮" "⑯" "⑰" "⑱" "⑲" "⑳"))
+;;(setq org-bullets-bullet-list '("①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨" "⑩" "⑪" "⑫" "⑬" "⑭" "⑮" "⑯" "⑰" "⑱" "⑲" "⑳"))
 
 (add-hook 'org-mode-hook #'visual-line-mode)
 
@@ -315,6 +317,8 @@
 
 (fset 'replace-binary-fix-separators
    (kmacro-lambda-form [?\M-x ?r ?e ?p ?l ?a ?c ?e ?- ?s ?t ?r ?i ?n ?g return ?^ ?A return ?\C-x ?8 return down return return] 0 "%d"))
+
+(add-to-list 'load-path "~/FutureProofDotfiles/dependencies/cucumber.el")
 
 (global-flycheck-mode t)
 
