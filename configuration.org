@@ -537,6 +537,8 @@ pairing or presenting code.
 
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/FutureProofDotfiles/dependencies/cucumber.el")
+(require 'feature-mode)
+(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
 #+end_src
 ** General
    I use a few packages in virtually every programming or writing environment to manage the project, handle auto-completion, search for terms, and deal with version control. That's all in here.
