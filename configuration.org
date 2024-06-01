@@ -454,6 +454,11 @@ Use flycheck in the appropriate buffers:
 (setq history-delete-duplicates t)
    #+end_src
 
+** Font size
+#+begin_src emacs-lisp
+(set-face-attribute 'default nil :height 240)
+#+end_src
+
 * Set personal information
 ** Who am I? Where am I?
 

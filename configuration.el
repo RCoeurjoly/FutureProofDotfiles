@@ -277,6 +277,8 @@
 
 (setq history-delete-duplicates t)
 
+(set-face-attribute 'default nil :height 240)
+
 (setq user-full-name "Roland Coeurjoly"
       user-mail-address "rolandcoeurjoly@gmail.com")
 
