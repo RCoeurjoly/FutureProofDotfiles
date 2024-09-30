@@ -41,6 +41,7 @@
         };
 	# Define the application
         apps.default = {
+          LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
           type = "app";
           program = "${myEmacs}/bin/emacs";
           args = [ "--load" "${./.}/init.el" ];
