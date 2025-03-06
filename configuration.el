@@ -1,4 +1,5 @@
-(setq org-agenda-files '("~/Exocortex"))
+(setq org-agenda-files
+      (directory-files "~/Exocortex" t "^2025.*\\.org$"))
 
 (custom-set-variables
  '(org-agenda-custom-commands
@@ -413,3 +414,37 @@ of FILE in the current directory, suitable for creation"
   :ensure t
   :init (doom-modeline-mode 1))
 (add-hook 'window-setup-hook 'toggle-frame-fullscreen)
+
+(defun my-create-cloze ()
+  "Crea una tarjeta de cloze deletion en la línea actual.
+Si hay una selección de texto (dentro de la misma línea), la reemplaza por {{cX::texto}}.
+Donde X es el número cloze más alto en la línea +1."
+  (interactive)
+  (if (use-region-p)
+      (let* ((start (region-beginning))
+             (end (region-end))
+             (text (buffer-substring-no-properties start end))
+             (line-start (save-excursion (beginning-of-line) (point)))
+             (line-end (save-excursion (end-of-line) (point)))
+             (line-text (buffer-substring-no-properties line-start line-end))
+             (max-cloze 0))
+        ;; Buscar el mayor número de cloze en la línea
+        (save-match-data
+          (let ((matches (s-match-strings-all "{{c\\([0-9]+\\)::" line-text)))
+            (when matches
+              (setq max-cloze (apply 'max (mapcar (lambda (m) (string-to-number (cadr m))) matches))))))
+        ;; Reemplazar la selección con la nueva cloze
+        (delete-region start end)
+        (insert (format "{{c%d::%s}}" (1+ max-cloze) text)))
+    (message "No hay texto seleccionado o la selección es múltiple.")))
+
+(defun my-wrap-in-latex ()
+  "Envolver el texto seleccionado en símbolos LaTeX \\( y \\)."
+  (interactive)
+  (if (use-region-p)
+      (let ((start (region-beginning))
+            (end (region-end)))
+        (let ((text (buffer-substring-no-properties start end)))
+          (delete-region start end)
+          (insert (concat "\\(" text "\\)"))))
+    (message "No hay texto seleccionado.")))

@@ -1,3 +1,4 @@
+
 {
   description = "A flake for my Emacs setup";
 
@@ -34,10 +35,14 @@
           auto-complete
           cl-lib
           org-bullets
+          gnuplot
+          latex
+          pkgs.gnuplot
+          pkgs.texlivePackages.dvipng
         ]);
       in {
-        devShells = pkgs.mkShell {
-          buildInputs = [ myEmacs ];
+        devShells.default = pkgs.mkShell {
+          buildInputs = [ myEmacs pkgs.gnuplot ];
         };
 	# Define the application
         apps.default = {

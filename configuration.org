@@ -6,7 +6,8 @@
 * Org mode
 ** Agenda
    #+begin_src emacs-lisp
-(setq org-agenda-files '("~/Exocortex"))
+(setq org-agenda-files
+      (directory-files "~/Exocortex" t "^2025.*\\.org$"))
    #+end_src
 *** Ignore files
     #+begin_src emacs-lisp
@@ -698,3 +699,20 @@ Donde X es el número cloze más alto en la línea +1."
 
 #+RESULTS:
 : my-create-cloze
+
+* Latex
+#+begin_src emacs-lisp
+(defun my-wrap-in-latex ()
+  "Envolver el texto seleccionado en símbolos LaTeX \\( y \\)."
+  (interactive)
+  (if (use-region-p)
+      (let ((start (region-beginning))
+            (end (region-end)))
+        (let ((text (buffer-substring-no-properties start end)))
+          (delete-region start end)
+          (insert (concat "\\(" text "\\)"))))
+    (message "No hay texto seleccionado.")))
+#+end_src
+
+#+RESULTS:
+: my-wrap-in-latex
