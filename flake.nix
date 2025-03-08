@@ -36,7 +36,6 @@
           cl-lib
           org-bullets
           gnuplot
-          latex
           pkgs.gnuplot
           pkgs.texlivePackages.dvipng
         ]);
