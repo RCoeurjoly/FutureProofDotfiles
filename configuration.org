@@ -716,3 +716,8 @@ Donde X es el número cloze más alto en la línea +1."
 
 #+RESULTS:
 : my-wrap-in-latex
+
+* Language
+#+begin_src emacs-lisp
+(require 'iso-transl)
+#+end_src

@@ -448,3 +448,5 @@ Donde X es el número cloze más alto en la línea +1."
           (delete-region start end)
           (insert (concat "\\(" text "\\)"))))
     (message "No hay texto seleccionado.")))
+
+(require 'iso-transl)
