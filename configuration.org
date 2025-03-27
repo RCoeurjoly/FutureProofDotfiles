@@ -701,6 +701,7 @@ Donde X es el número cloze más alto en la línea +1."
 : my-create-cloze
 
 * Latex
+** Wrap in latex
 #+begin_src emacs-lisp
 (defun my-wrap-in-latex ()
   "Envolver el texto seleccionado en símbolos LaTeX \\( y \\)."
@@ -716,6 +717,22 @@ Donde X es el número cloze más alto en la línea +1."
 
 #+RESULTS:
 : my-wrap-in-latex
+** Wrap in latex text
+#+begin_src emacs-lisp
+(defun my-wrap-in-latex-text ()
+  "Envolver el texto seleccionado en \text{ }."
+  (interactive)
+  (if (use-region-p)
+      (let ((start (region-beginning))
+            (end (region-end)))
+        (let ((text (buffer-substring-no-properties start end)))
+          (delete-region start end)
+          (insert (concat "\\text{" text "}"))))
+    (message "No hay texto seleccionado.")))
+#+end_src
+
+#+RESULTS:
+: my-wrap-in-latex-text
 
 * Language
 #+begin_src emacs-lisp

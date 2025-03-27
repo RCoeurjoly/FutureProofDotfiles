@@ -15,7 +15,7 @@
           inherit system;
           overlays = [ emacs-overlay.overlay ];
         };
-        myEmacs = pkgs.emacsWithPackages (epkgs: with epkgs; [
+        myEmacs = pkgs.emacs.pkgs.withPackages (epkgs: with epkgs; [
           # List your packages here
           helm
           projectile
