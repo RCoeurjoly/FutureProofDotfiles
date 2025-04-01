@@ -718,7 +718,7 @@ Donde X es el número cloze más alto en la línea +1."
 #+RESULTS:
 : my-wrap-in-latex
 ** Wrap in latex text
-#+begin_src emacs-lisp
+#+begin_src emacs-lispno
 (defun my-wrap-in-latex-text ()
   "Envolver el texto seleccionado en \text{ }."
   (interactive)
