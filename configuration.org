@@ -7,7 +7,8 @@
 ** Agenda
    #+begin_src emacs-lisp
 (setq org-agenda-files
-      (directory-files "~/Exocortex" t "^2025.*\\.org$"))
+      '("~/Exocortex/material_estudio_prioridad.org"))
+      ;(directory-files "~/Exocortex" t "^2025.*\\.org$"))
    #+end_src
 *** Ignore files
     #+begin_src emacs-lisp

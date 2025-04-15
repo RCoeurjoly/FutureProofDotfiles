@@ -1,5 +1,6 @@
 (setq org-agenda-files
-      (directory-files "~/Exocortex" t "^2025.*\\.org$"))
+      '("~/Exocortex/material_estudio_prioridad.org"))
+      ;(directory-files "~/Exocortex" t "^2025.*\\.org$"))
 
 (custom-set-variables
  '(org-agenda-custom-commands
