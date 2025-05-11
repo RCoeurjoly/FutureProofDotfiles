@@ -38,6 +38,7 @@
           gnuplot
           pkgs.gnuplot
           pkgs.texlivePackages.dvipng
+          markdown-mode
         ]);
       in {
         devShells.default = pkgs.mkShell {
