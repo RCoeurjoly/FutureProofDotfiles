@@ -1,4 +1,3 @@
-
 {
   description = "A flake for my Emacs setup";
 
@@ -42,7 +41,7 @@
         ]);
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ myEmacs pkgs.gnuplot ];
+          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 ];
         };
 	# Define the application
         apps.default = {
