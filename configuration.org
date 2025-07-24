@@ -515,8 +515,40 @@ pairing or presenting code.
 
 *** Python
 #+BEGIN_SRC emacs-lisp
-;  (add-hook 'python-mode-hook 'company-jedi:setup)
-;  (setq company-jedi:complete-on-dot t)
+(use-package lsp-mode
+  :hook (python-mode . lsp)
+  :commands lsp)
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
+(use-package projectile
+  :config (projectile-mode))
+
+(use-package consult-projectile
+  :bind ("C-c p s" . consult-projectile-ripgrep))
+
+(use-package blacken
+  :hook (python-mode . blacken-mode))
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package magit
+  :commands magit-status)
+
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c" . mc/edit-lines)))
+
+(use-package lsp-pyright
+  :ensure t
+  :after lsp-mode
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp)))  ;; or lsp-deferred
+  :config
+  (setq lsp-pyright-typechecking-mode "basic")) ;; optional
+
 ;  (setq elpy-rpc-backend "company-jedi")
 
 ;(eval-after-load "company"

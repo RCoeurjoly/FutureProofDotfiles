@@ -1,3 +1,6 @@
+
+
+
 {
   description = "A flake for my Emacs setup";
 
@@ -38,10 +41,14 @@
           pkgs.gnuplot
           pkgs.texlivePackages.dvipng
           markdown-mode
+          blacken
+          lsp-mode
+          lsp-pyright
+          lsp-ui
         ]);
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 ];
+          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright];
         };
 	# Define the application
         apps.default = {
