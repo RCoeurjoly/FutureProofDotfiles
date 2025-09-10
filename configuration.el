@@ -337,6 +337,33 @@
   :config
   (setq lsp-pyright-typechecking-mode "basic")) ;; optional
 
+(with-eval-after-load 'lsp-mode
+  (setq lsp-file-watch-ignored-directories
+        (append lsp-file-watch-ignored-directories
+                '("[/\\\\]\\.venv$"
+                  "[/\\\\]node_modules$"
+                  "[/\\\\]\\.pytest_cache$"
+                  "[/\\\\]\\.mypy_cache$"
+                  "[/\\\\]\\.ruff_cache$"
+                  "[/\\\\]_cache$"
+                  "[/\\\\]out$"
+                  "[/\\\\]htmlcov$"
+                  "[/\\\\]\\.idea$"
+                  "[/\\\\]\\.ipynb_checkpoints$"
+                  "[/\\\\]catboost_info$"
+                  "[/\\\\]_report$"
+                  "[/\\\\]intermediates$"
+                  "[/\\\\]model_pipeline\\.egg-info$"
+                  "[/\\\\]\\.hypothesis$"
+                  "[/\\\\]_archived_jurisdictions$"
+                  "[/\\\\]result_images$"
+                  "[/\\\\]\\.vscode$"
+                  "[/\\\\]\\.git$"
+                  "[/\\\\]bazel-bin$"
+                  "[/\\\\]bazel-out$"
+                  "[/\\\\]bazel-testlogs$"
+                  "[/\\\\]bazel-model-pipeline$"))))
+
 ;  (setq elpy-rpc-backend "company-jedi")
 
 ;(eval-after-load "company"
