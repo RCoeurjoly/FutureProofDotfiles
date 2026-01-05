@@ -45,6 +45,7 @@
           lsp-mode
           lsp-pyright
           lsp-ui
+          bazel
         ]);
       in {
         devShells.default = pkgs.mkShell {
