@@ -46,6 +46,11 @@
           lsp-pyright
           lsp-ui
           bazel
+          jupyter
+          zmq
+          simple-httpd
+          websocket
+          ein
         ]);
       in {
         devShells.default = pkgs.mkShell {
