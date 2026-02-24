@@ -1,0 +1,17 @@
+#!/bin/bash
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set completion-ignore-case on
+set expand-tilde on
+set convert-meta off
+set input-meta on
+set output-meta on
+set show-all-if-ambiguous on
+set visible-stats on
+set page-completions on
+set completion-query-items 200
+set show-all-if-unmodified on
+set visible-stats on
+set echo-control-characters Off
+set mark-directories On
+set mark-symlinked-directories On

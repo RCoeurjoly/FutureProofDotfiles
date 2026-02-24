@@ -1,16 +1,16 @@
-
-
-
 {
-  description = "A flake for my Emacs setup";
+  description = "A flake for my Emacs setup + home-manager";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     flake-utils.url = "github:numtide/flake-utils";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, emacs-overlay, flake-utils, ... }@inputs:
+  outputs = inputs@{ self, nixpkgs, emacs-overlay, flake-utils, home-manager, ... }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
@@ -29,7 +29,7 @@
           doom-modeline
           magit
           org-roam
-	        nix-mode
+          nix-mode
           which-key
           ob-elixir
           # ob-coq
@@ -51,12 +51,15 @@
           simple-httpd
           websocket
           ein
+          feature-mode
+          ivy
         ]);
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright];
+          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright ];
         };
-	# Define the application
+
+        # Define the application
         apps.default = {
           LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
           type = "app";
@@ -64,5 +67,14 @@
           args = [ "--load" "${./.}/init.el" ];
         };
         # appp.${system} = apps.emacs;
-      });
+      })
+    // {
+      homeConfigurations.roland = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [ emacs-overlay.overlay ];
+        };
+        modules = [ ./home.nix ];
+      };
+    };
 }
