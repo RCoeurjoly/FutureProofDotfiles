@@ -7,6 +7,10 @@
   # Keep this at the version matching your initial Home Manager setup.
   home.stateVersion = "25.11";
 
+  home.packages = [
+    pkgs.diff-so-fancy
+  ];
+
   programs.git = {
     enable = true;
 
