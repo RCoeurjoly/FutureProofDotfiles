@@ -1,0 +1,59 @@
+* Bash Functions
+  Source of truth for shell functions managed by Home Manager.
+
+** Tangled Bash
+   Edit this block, then tangle to `functions.bash`.
+
+#+begin_src bash :tangle functions.bash
+# Generated from bash/functions.org
+
+grepcpp () {
+    grep -IRsnEi --exclude-dir=.git --exclude-dir=build --include="*.h" --include="*.cpp" --include="*.hpp" --include="*.cc" "${@}"
+}
+
+greper () {
+    grep -IRsnEia --exclude-dir=.git --exclude-dir=env --exclude-dir=build --exclude-dir=node_modules --exclude-dir=.npm-packages --exclude="*.bash_history" "${@}"
+}
+
+greporg () {
+    grep -IRsnEia --exclude-dir=.git --exclude-dir=env --exclude-dir=build --exclude="*.bash_history" "${@}" "$HOME"/Exocortex/*org "$HOME"/Exocortex/daily/*org
+}
+
+timestamp () {
+    date +"%Y-%m-%d_%H:%M:%S.%N"
+}
+
+lazygit () {
+    cd "$HOME/Exocortex" || return 1
+    git add .
+    git commit -m "$(date)"
+    git push
+    cd - >/dev/null || return 1
+}
+
+git_sync_repo () {
+    local repo_to_sync="$1"
+    if [ -z "$repo_to_sync" ]; then
+        echo "usage: git_sync_repo <repo_name>"
+        return 1
+    fi
+
+    cd "$HOME/$repo_to_sync" || return 1
+    git config --bool branch.master.sync true
+    git config --bool branch.master.syncNewFiles true
+    git-sync
+}
+
+git_sync_exocortex () {
+    git_sync_repo "Exocortex"
+}
+
+git_sync_all () {
+    local repos_to_sync="Exocortex LLPSI Metatron"
+    local repo_to_sync
+
+    for repo_to_sync in $repos_to_sync; do
+        git_sync_repo "$repo_to_sync" || return 1
+    done
+}
+#+end_src

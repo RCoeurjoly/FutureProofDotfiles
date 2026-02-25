@@ -9,6 +9,7 @@
 
   home.packages = [
     pkgs.diff-so-fancy
+    pkgs.git-sync
   ];
 
   programs.git = {
@@ -79,9 +80,15 @@
     };
   };
 
-  # Keep existing commit template/ignore files under version control in this repo.
-  home.file.".gitmessage".source = ./legacy-import/git/.gitmessage;
-  home.file.".gitignore".source = ./legacy-import/git/.gitignore;
+  # Keep shared files under version control in this repo.
+  home.file.".gitmessage".source = ./git/.gitmessage;
+  home.file.".gitignore".source = ./git/.gitignore;
+  home.file.".bashrc.d/functions.bash".source = ./bash/functions.bash;
+
+  # Avoid managing ~/.bashrc directly. Ubuntu's default ~/.bashrc loads ~/.bash_aliases.
+  home.file.".bash_aliases".text = ''
+    source "$HOME/.bashrc.d/functions.bash"
+  '';
 
   programs.readline = {
     enable = true;
