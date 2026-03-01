@@ -80,6 +80,16 @@
     };
   };
 
+  services.git-sync = {
+    enable = true;
+    repositories = {
+      exocortex = {
+        path = "${config.home.homeDirectory}/Exocortex";
+        uri = "git@github.com:RCoeurjoly/Exocortex.git";
+      };
+    };
+  };
+
   # Keep shared files under version control in this repo.
   home.file.".gitmessage".source = ./git/.gitmessage;
   home.file.".gitignore".source = ./git/.gitignore;
