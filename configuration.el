@@ -370,6 +370,15 @@
 ; '(add-to-list 'company-backends 'company-anaconda))
 ;(spacemacs|defvar-company-backends python-mode)
 
+(use-package rust-mode
+  :mode "\\.rs$"
+  :hook (rust-mode . eglot-ensure)
+  :config
+  (setq rust-format-on-save t))
+
+(with-eval-after-load (quote eglot)
+  (add-to-list (quote eglot-server-programs) (quote (rust-mode . ("rust-analyzer")))))
+
 ;; This doesn't work in Ubuntu
 (autoload 'arduino-mode "arduino-mode" "Arduino mode" t )
 (add-hook 'arduino-mode-hook

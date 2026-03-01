@@ -53,10 +53,13 @@
           ein
           feature-mode
           ivy
+          eglot
+          rust-mode
+          pkgs.rust-analyzer
         ]);
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright ];
+          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright pkgs.rust-analyzer ];
         };
 
         # Define the application

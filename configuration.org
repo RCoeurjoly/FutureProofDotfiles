@@ -582,6 +582,17 @@ pairing or presenting code.
 ; '(add-to-list 'company-backends 'company-anaconda))
 ;(spacemacs|defvar-company-backends python-mode)
 #+END_SRC
+*** Rust
+#+BEGIN_SRC emacs-lisp
+(use-package rust-mode
+  :mode "\\.rs$"
+  :hook (rust-mode . eglot-ensure)
+  :config
+  (setq rust-format-on-save t))
+
+(with-eval-after-load (quote eglot)
+  (add-to-list (quote eglot-server-programs) (quote (rust-mode . ("rust-analyzer")))))
+#+END_SRC
 *** Arduino
     #+BEGIN_SRC emacs-lisp
 ;; This doesn't work in Ubuntu
