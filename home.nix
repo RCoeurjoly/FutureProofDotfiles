@@ -97,6 +97,12 @@
 
   # Avoid managing ~/.bashrc directly. Ubuntu's default ~/.bashrc loads ~/.bash_aliases.
   home.file.".bash_aliases".text = ''
+    if [ -f "${pkgs.bash-git-prompt}/gitprompt.sh" ]; then
+      GIT_PROMPT_ONLY_IN_REPO=1
+      GIT_PROMPT_THEME=Single_line_Ubuntu
+      source "${pkgs.bash-git-prompt}/gitprompt.sh"
+    fi
+
     source "$HOME/.bashrc.d/functions.bash"
   '';
 
