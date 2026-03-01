@@ -256,6 +256,12 @@ Insertion of code blocks
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key (kbd "C-c SPC") #'set-mark-command)
+;; Use Emacs built-in input methods (Quail) for Chinese.
+(setq default-input-method "chinese-py")
+(global-set-key (kbd "C-c i c") (lambda () (interactive) (set-input-method "chinese-py")))
+(global-set-key (kbd "C-\\") #'toggle-input-method)
+(global-set-key (kbd "C-c \\") #'toggle-input-method)
 (global-font-lock-mode 1)
    #+END_SRC
 ** Tables
