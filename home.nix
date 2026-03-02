@@ -123,6 +123,10 @@
   home.file.".gitmessage".source = ./git/.gitmessage;
   home.file.".gitignore".source = ./git/.gitignore;
   home.file.".bashrc.d/functions.bash".source = ./bash/functions.bash;
+  home.file.".Xresources".text = ''
+    ! Global X11 font scaling for small-text setups.
+    Xft.dpi: 144
+  '';
   home.file.".i3status.conf".source = ./x-windows/.i3status.conf;
   home.file.".xinitrc".source = ./x-windows/.xinitrc;
   home.file.".local/bin/toggleTouchpad.sh" = {
@@ -174,6 +178,19 @@
 
   xsession = {
     enable = true;
+    # Avoid "environment variable SSH_AUTH_SOCK not set, ignoring" at login.
+    importedVariables = lib.mkForce [
+      "DBUS_SESSION_BUS_ADDRESS"
+      "DISPLAY"
+      "XAUTHORITY"
+      "XDG_DATA_DIRS"
+      "XDG_RUNTIME_DIR"
+      "XDG_SESSION_ID"
+    ];
+    initExtra = ''
+      # Load X resources (including global DPI) at session start.
+      ${pkgs.xrdb}/bin/xrdb -merge "$HOME/.Xresources"
+    '';
 
     windowManager.i3 = {
       enable = true;

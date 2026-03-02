@@ -1,1 +1,5 @@
 nix run . -- --load init.el
+
+To install a GDM session entry for Home Manager i3 on Ubuntu:
+
+sudo ./scripts/install-gdm-i3-session.sh roland
