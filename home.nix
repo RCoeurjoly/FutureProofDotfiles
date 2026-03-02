@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   home.username = "roland";
@@ -124,10 +124,19 @@
   home.file.".gitignore".source = ./git/.gitignore;
   home.file.".bashrc.d/functions.bash".source = ./bash/functions.bash;
   home.file.".i3status.conf".source = ./x-windows/.i3status.conf;
+  home.file.".xinitrc".source = ./x-windows/.xinitrc;
   home.file.".local/bin/toggleTouchpad.sh" = {
     source = ./scripts/toggleTouchpad.sh;
     executable = true;
   };
+
+  # GDM evaluates TryExec in /usr/share/xsessions as the "gdm" user.
+  # Grant traverse-only ACLs so it can resolve ~/.nix-profile/bin/i3.
+  home.activation.gdmI3SessionAcl = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if getent passwd gdm >/dev/null 2>&1; then
+      ${pkgs.acl}/bin/setfacl -m u:gdm:--x "$HOME" "$HOME/.local" "$HOME/.local/state" || true
+    fi
+  '';
 
   # Avoid managing ~/.bashrc directly. Ubuntu's default ~/.bashrc loads ~/.bash_aliases.
   home.file.".bash_aliases".text = ''

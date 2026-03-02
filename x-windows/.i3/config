@@ -163,7 +163,7 @@ bar {
         tray_output primary
 }
 # # Start the appropriate programs on the right workspaces
-exec --no-startup-id i3-msg 'workspace 2:web; exec abrowser || firefox; workspace 3:tor; exec cd /home/${USER}/tor-browser_en-US && ./start-tor-browser.desktop; workspace 4:term; exec xterm; workspace 1:emacs; exec emacs26 || emacs'
+exec --no-startup-id i3-msg 'workspace 2:web; exec abrowser || firefox; workspace 3:tor; exec cd "$HOME/tor-browser_en-US" && ./start-tor-browser.desktop; workspace 4:term; exec xterm; workspace 1:emacs; exec emacs26 || emacs'
 exec --no-startup-id sh -c '(command -v barriers >/dev/null && barriers -f --no-tray --debug INFO --enable-crypto --address :24800 > /dev/null 2>&1) || (command -v barrier >/dev/null && barrier -f --no-tray --debug INFO --enable-crypto --address :24800 > /dev/null 2>&1) || true'
 exec --no-startup-id fcitx5 -d
 exec --no-startup-id setxkbmap us
