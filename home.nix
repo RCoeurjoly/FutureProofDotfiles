@@ -10,6 +10,13 @@
   home.packages = [
     pkgs.diff-so-fancy
     pkgs.git-sync
+    pkgs.dmenu
+    pkgs.i3status
+    pkgs.playerctl
+    pkgs.xterm
+    pkgs.setxkbmap
+    pkgs.xbacklight
+    pkgs.xinput
   ];
 
   i18n.inputMethod = {
@@ -116,6 +123,11 @@
   home.file.".gitmessage".source = ./git/.gitmessage;
   home.file.".gitignore".source = ./git/.gitignore;
   home.file.".bashrc.d/functions.bash".source = ./bash/functions.bash;
+  home.file.".i3status.conf".source = ./x-windows/.i3status.conf;
+  home.file.".local/bin/toggleTouchpad.sh" = {
+    source = ./scripts/toggleTouchpad.sh;
+    executable = true;
+  };
 
   # Avoid managing ~/.bashrc directly. Ubuntu's default ~/.bashrc loads ~/.bash_aliases.
   home.file.".bash_aliases".text = ''
@@ -148,6 +160,16 @@
       "echo-control-characters" = false;
       "mark-directories" = true;
       "mark-symlinked-directories" = true;
+    };
+  };
+
+  xsession = {
+    enable = true;
+
+    windowManager.i3 = {
+      enable = true;
+      config = null;
+      extraConfig = builtins.readFile ./x-windows/.i3/config;
     };
   };
 
