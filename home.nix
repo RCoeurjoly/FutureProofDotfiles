@@ -127,6 +127,10 @@
   home.file.".Xresources".text = ''
     ! Global X11 font scaling for small-text setups.
     Xft.dpi: 144
+
+    ! Make xterm selections use the shared X11 clipboard so paste works
+    ! consistently in GUI apps such as Emacs and Firefox.
+    XTerm*selectToClipboard: true
   '';
   home.file.".i3status.conf".source = ./x-windows/.i3status.conf;
   home.file.".xinitrc".source = ./x-windows/.xinitrc;
