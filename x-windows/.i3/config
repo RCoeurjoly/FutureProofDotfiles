@@ -174,6 +174,12 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDI
 bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
+# Screenshot controls
+bindsym --release Print exec --no-startup-id gnome-screenshot
+bindsym --release Shift+Print exec --no-startup-id gnome-screenshot -a
+bindsym --release Mod1+Print exec --no-startup-id gnome-screenshot -w
+bindsym --release Control+Print exec --no-startup-id gnome-screenshot -c
+
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness

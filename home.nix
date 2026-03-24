@@ -11,6 +11,7 @@
     pkgs.diff-so-fancy
     pkgs.git-sync
     pkgs.dmenu
+    pkgs.gnome-screenshot
     pkgs.i3status
     pkgs.playerctl
     pkgs.xterm
