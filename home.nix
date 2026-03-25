@@ -8,6 +8,7 @@
   home.stateVersion = "25.11";
 
   home.packages = [
+    pkgs.brightnessctl
     pkgs.diff-so-fancy
     pkgs.git-sync
     pkgs.dmenu
@@ -137,6 +138,10 @@
   home.file.".xinitrc".source = ./x-windows/.xinitrc;
   home.file.".local/bin/toggleTouchpad.sh" = {
     source = ./scripts/toggleTouchpad.sh;
+    executable = true;
+  };
+  home.file.".local/bin/adjustBrightness.sh" = {
+    source = ./scripts/adjustBrightness.sh;
     executable = true;
   };
 
