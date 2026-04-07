@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
-{
+let
+  texForOrgExport = pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-small wrapfig capt-of;
+  };
+in {
   home.username = "roland";
   home.homeDirectory = "/home/roland";
 
@@ -17,6 +21,7 @@
     pkgs.playerctl
     pkgs.xterm
     pkgs.setxkbmap
+    texForOrgExport
     pkgs.xbacklight
     pkgs.xinput
   ];

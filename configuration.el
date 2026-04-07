@@ -274,7 +274,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 (setq shell-file-name "bash")
-(setq shell-command-switch "-ic")
+(setq shell-command-switch "-lc")
 
 (use-package yasnippet
   :ensure t
