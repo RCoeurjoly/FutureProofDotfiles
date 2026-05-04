@@ -1,0 +1,8 @@
+# YPCB-00338-1P1 (Digilent FT232H)
+# Exposes as /dev/ttyUSB* during FPGA programming and debug
+
+# Keep a stable non-root write path for the board's serial interface
+KERNEL=="ttyUSB*", SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", ATTRS{serial}=="210299BF3824", MODE="0660", GROUP="plugdev", SYMLINK+="ypcb-00338-1p1-tty"
+
+# Grant matching USB device node access for tools that open /dev/bus/usb directly
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6014", ATTRS{serial}=="210299BF3824", MODE="0660", GROUP="plugdev"
