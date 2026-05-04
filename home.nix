@@ -166,6 +166,8 @@ in {
       source "${pkgs.bash-git-prompt}/gitprompt.sh"
     fi
 
+    alias duh='du -h | sort -rh | head -20'
+
     source "$HOME/.bashrc.d/functions.bash"
   '';
 
