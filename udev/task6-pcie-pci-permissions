@@ -36,20 +36,6 @@ esac
 
 getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
 
-# Ensure Linux enables PCI memory decoding only for a fully identified endpoint.
-# A stale/corrupt post-reprogramming sysfs instance can report subsystem_device
-# 0xffff; for that state we delegate remove/reset/rescan below but do not grant
-# BAR access or try to force memory decoding.
-if (( valid_identity )); then
-  if [[ -w "$DEVICE_DIR/enable" ]]; then
-    echo 1 >"$DEVICE_DIR/enable"
-  else
-    echo "task6-pcie-pci-permissions: enable is not writable: $DEVICE_DIR/enable" >&2
-  fi
-else
-  echo "task6-pcie-pci-permissions: stale endpoint identity; delegating recovery only: $DEVICE_DIR" >&2
-fi
-
 # Reprogramming the FPGA replaces the PCIe endpoint behind the host's current
 # sysfs device. Delegate narrowly scoped recovery nodes as soon as identity is
 # known, even if BAR0 has not been assigned yet.
@@ -64,6 +50,23 @@ PARENT_DIR="$(dirname "$DEVICE_DIR")"
 if [[ -e "$PARENT_DIR/rescan" ]]; then
   chgrp "$GROUP_NAME" "$PARENT_DIR/rescan"
   chmod 0220 "$PARENT_DIR/rescan"
+fi
+
+# Ensure Linux enables PCI memory decoding only for a fully identified endpoint.
+# A stale/corrupt post-reprogramming sysfs instance can report subsystem_device
+# 0xffff; for that state we delegate remove/reset/rescan above but do not grant
+# BAR access or try to force memory decoding. The enable write can fail for a
+# partially enumerated endpoint, so keep it nonfatal after recovery delegation.
+if (( valid_identity )); then
+  if [[ -w "$DEVICE_DIR/enable" ]]; then
+    if ! echo 1 >"$DEVICE_DIR/enable"; then
+      echo "task6-pcie-pci-permissions: enable write failed: $DEVICE_DIR/enable" >&2
+    fi
+  else
+    echo "task6-pcie-pci-permissions: enable is not writable: $DEVICE_DIR/enable" >&2
+  fi
+else
+  echo "task6-pcie-pci-permissions: stale endpoint identity; delegating recovery only: $DEVICE_DIR" >&2
 fi
 
 for _ in $(seq 1 50); do
