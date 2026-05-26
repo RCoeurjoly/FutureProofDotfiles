@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DEVPATH_ARG="${1:-}"
+GROUP_NAME="${TASK6_PCIE_GROUP:-plugdev}"
+SYSFS_ROOT="/sys"
+
+fail() {
+  echo "task6-pcie-pci-permissions: $*" >&2
+  exit 1
+}
+
+[[ -n "$DEVPATH_ARG" ]] || fail "missing udev devpath argument"
+[[ "$DEVPATH_ARG" == /devices/* ]] || fail "refusing non-device devpath: $DEVPATH_ARG"
+
+DEVICE_DIR="${SYSFS_ROOT}${DEVPATH_ARG}"
+[[ -d "$DEVICE_DIR" ]] || fail "missing sysfs device: $DEVICE_DIR"
+[[ -f "$DEVICE_DIR/vendor" ]] || fail "missing vendor attribute: $DEVICE_DIR"
+[[ -f "$DEVICE_DIR/device" ]] || fail "missing device attribute: $DEVICE_DIR"
+[[ -f "$DEVICE_DIR/subsystem_vendor" ]] || fail "missing subsystem_vendor attribute: $DEVICE_DIR"
+[[ -f "$DEVICE_DIR/subsystem_device" ]] || fail "missing subsystem_device attribute: $DEVICE_DIR"
+
+vendor="$(<"$DEVICE_DIR/vendor")"
+device="$(<"$DEVICE_DIR/device")"
+subsystem_vendor="$(<"$DEVICE_DIR/subsystem_vendor")"
+subsystem_device="$(<"$DEVICE_DIR/subsystem_device")"
+
+[[ "$vendor" == "0x10ee" ]] || fail "unexpected vendor $vendor"
+[[ "$device" == "0x0480" ]] || fail "unexpected device $device"
+[[ "$subsystem_vendor" == "0x10ee" ]] || fail "unexpected subsystem_vendor $subsystem_vendor"
+[[ "$subsystem_device" == "0xabcd" ]] || fail "unexpected subsystem_device $subsystem_device"
+
+for _ in $(seq 1 50); do
+  [[ -e "$DEVICE_DIR/resource0" ]] && break
+  sleep 0.1
+done
+
+[[ -e "$DEVICE_DIR/resource0" ]] || fail "missing BAR0 resource: $DEVICE_DIR/resource0"
+getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
+
+chgrp "$GROUP_NAME" "$DEVICE_DIR/resource0"
+chmod 0660 "$DEVICE_DIR/resource0"
