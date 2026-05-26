@@ -4,7 +4,7 @@
 # Task 6 PCIe BAR images. Enable PCI memory space and delegate BAR0 MMIO to
 # plugdev so repo board gates can run without sudo.
 
-ACTION=="add|change", SUBSYSTEM=="pci", KERNEL=="0000:42:00.0", ATTR{vendor}=="0x10ee", ATTR{device}=="0x0480", ATTR{subsystem_vendor}=="0x10ee", ATTR{subsystem_device}=="0xabcd", ATTR{enable}="1", RUN+="/usr/local/libexec/task6-pcie/task6-pcie-pci-permissions %p"
+ACTION=="add|change", SUBSYSTEM=="pci", KERNEL=="0000:42:00.0", ATTR{vendor}=="0x10ee", ATTR{device}=="0x0480", ATTR{subsystem_vendor}=="0x10ee", RUN+="/usr/local/libexec/task6-pcie/task6-pcie-pci-permissions %p"
 
 # The endpoint may be absent after a Thunderbolt/FPGA power-cycle. Keep the
 # fixed immediate upstream bridge rescan node delegated so the endpoint can be

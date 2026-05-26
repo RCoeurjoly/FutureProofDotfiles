@@ -28,17 +28,26 @@ subsystem_device="$(<"$DEVICE_DIR/subsystem_device")"
 [[ "$vendor" == "0x10ee" ]] || fail "unexpected vendor $vendor"
 [[ "$device" == "0x0480" ]] || fail "unexpected device $device"
 [[ "$subsystem_vendor" == "0x10ee" ]] || fail "unexpected subsystem_vendor $subsystem_vendor"
-[[ "$subsystem_device" == "0xabcd" ]] || fail "unexpected subsystem_device $subsystem_device"
+case "$subsystem_device" in
+  0xabcd) valid_identity=1 ;;
+  0xffff) valid_identity=0 ;;
+  *) fail "unexpected subsystem_device $subsystem_device" ;;
+esac
 
 getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
 
-# Ensure Linux enables PCI memory decoding for the recovered endpoint. The udev
-# rule also sets ATTR{enable}="1", but doing it here keeps the recovery path
-# robust when the endpoint is removed and rediscovered under the bridge.
-if [[ -w "$DEVICE_DIR/enable" ]]; then
-  echo 1 >"$DEVICE_DIR/enable"
+# Ensure Linux enables PCI memory decoding only for a fully identified endpoint.
+# A stale/corrupt post-reprogramming sysfs instance can report subsystem_device
+# 0xffff; for that state we delegate remove/reset/rescan below but do not grant
+# BAR access or try to force memory decoding.
+if (( valid_identity )); then
+  if [[ -w "$DEVICE_DIR/enable" ]]; then
+    echo 1 >"$DEVICE_DIR/enable"
+  else
+    echo "task6-pcie-pci-permissions: enable is not writable: $DEVICE_DIR/enable" >&2
+  fi
 else
-  echo "task6-pcie-pci-permissions: enable is not writable: $DEVICE_DIR/enable" >&2
+  echo "task6-pcie-pci-permissions: stale endpoint identity; delegating recovery only: $DEVICE_DIR" >&2
 fi
 
 # Reprogramming the FPGA replaces the PCIe endpoint behind the host's current
@@ -62,9 +71,11 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 
-if [[ -e "$DEVICE_DIR/resource0" ]]; then
-  chgrp "$GROUP_NAME" "$DEVICE_DIR/resource0"
-  chmod 0660 "$DEVICE_DIR/resource0"
-else
-  echo "task6-pcie-pci-permissions: BAR0 resource not assigned yet: $DEVICE_DIR/resource0" >&2
+if (( valid_identity )); then
+  if [[ -e "$DEVICE_DIR/resource0" ]]; then
+    chgrp "$GROUP_NAME" "$DEVICE_DIR/resource0"
+    chmod 0660 "$DEVICE_DIR/resource0"
+  else
+    echo "task6-pcie-pci-permissions: BAR0 resource not assigned yet: $DEVICE_DIR/resource0" >&2
+  fi
 fi
