@@ -30,21 +30,11 @@ subsystem_device="$(<"$DEVICE_DIR/subsystem_device")"
 [[ "$subsystem_vendor" == "0x10ee" ]] || fail "unexpected subsystem_vendor $subsystem_vendor"
 [[ "$subsystem_device" == "0xabcd" ]] || fail "unexpected subsystem_device $subsystem_device"
 
-for _ in $(seq 1 50); do
-  [[ -e "$DEVICE_DIR/resource0" ]] && break
-  sleep 0.1
-done
-
-[[ -e "$DEVICE_DIR/resource0" ]] || fail "missing BAR0 resource: $DEVICE_DIR/resource0"
 getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
 
-chgrp "$GROUP_NAME" "$DEVICE_DIR/resource0"
-chmod 0660 "$DEVICE_DIR/resource0"
-
 # Reprogramming the FPGA replaces the PCIe endpoint behind the host's current
-# sysfs device. Delegate narrowly scoped recovery nodes for this matched
-# endpoint and its immediate upstream bridge; do not expose config space or
-# global PCI rescans.
+# sysfs device. Delegate narrowly scoped recovery nodes as soon as identity is
+# known, even if BAR0 has not been assigned yet.
 for attr in remove rescan reset; do
   if [[ -e "$DEVICE_DIR/$attr" ]]; then
     chgrp "$GROUP_NAME" "$DEVICE_DIR/$attr"
@@ -56,4 +46,16 @@ PARENT_DIR="$(dirname "$DEVICE_DIR")"
 if [[ -e "$PARENT_DIR/rescan" ]]; then
   chgrp "$GROUP_NAME" "$PARENT_DIR/rescan"
   chmod 0220 "$PARENT_DIR/rescan"
+fi
+
+for _ in $(seq 1 50); do
+  [[ -e "$DEVICE_DIR/resource0" ]] && break
+  sleep 0.1
+done
+
+if [[ -e "$DEVICE_DIR/resource0" ]]; then
+  chgrp "$GROUP_NAME" "$DEVICE_DIR/resource0"
+  chmod 0660 "$DEVICE_DIR/resource0"
+else
+  echo "task6-pcie-pci-permissions: BAR0 resource not assigned yet: $DEVICE_DIR/resource0" >&2
 fi
