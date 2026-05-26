@@ -32,6 +32,15 @@ subsystem_device="$(<"$DEVICE_DIR/subsystem_device")"
 
 getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
 
+# Ensure Linux enables PCI memory decoding for the recovered endpoint. The udev
+# rule also sets ATTR{enable}="1", but doing it here keeps the recovery path
+# robust when the endpoint is removed and rediscovered under the bridge.
+if [[ -w "$DEVICE_DIR/enable" ]]; then
+  echo 1 >"$DEVICE_DIR/enable"
+else
+  echo "task6-pcie-pci-permissions: enable is not writable: $DEVICE_DIR/enable" >&2
+fi
+
 # Reprogramming the FPGA replaces the PCIe endpoint behind the host's current
 # sysfs device. Delegate narrowly scoped recovery nodes as soon as identity is
 # known, even if BAR0 has not been assigned yet.
