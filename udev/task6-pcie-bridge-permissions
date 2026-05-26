@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DEVPATH_ARG="${1:-}"
+GROUP_NAME="${TASK6_PCIE_GROUP:-plugdev}"
+SYSFS_ROOT="/sys"
+
+fail() {
+  echo "task6-pcie-bridge-permissions: $*" >&2
+  exit 1
+}
+
+[[ -n "$DEVPATH_ARG" ]] || fail "missing udev devpath argument"
+[[ "$DEVPATH_ARG" == /devices/* ]] || fail "refusing non-device devpath: $DEVPATH_ARG"
+
+BRIDGE_DIR="${SYSFS_ROOT}${DEVPATH_ARG}"
+[[ -d "$BRIDGE_DIR" ]] || fail "missing sysfs bridge: $BRIDGE_DIR"
+[[ "$(basename "$BRIDGE_DIR")" == "0000:41:00.0" ]] || fail "refusing non-Task6 bridge: $BRIDGE_DIR"
+[[ -f "$BRIDGE_DIR/vendor" ]] || fail "missing vendor attribute: $BRIDGE_DIR"
+[[ -f "$BRIDGE_DIR/device" ]] || fail "missing device attribute: $BRIDGE_DIR"
+[[ -f "$BRIDGE_DIR/subsystem_vendor" ]] || fail "missing subsystem_vendor attribute: $BRIDGE_DIR"
+[[ -f "$BRIDGE_DIR/subsystem_device" ]] || fail "missing subsystem_device attribute: $BRIDGE_DIR"
+
+vendor="$(<"$BRIDGE_DIR/vendor")"
+device="$(<"$BRIDGE_DIR/device")"
+subsystem_vendor="$(<"$BRIDGE_DIR/subsystem_vendor")"
+subsystem_device="$(<"$BRIDGE_DIR/subsystem_device")"
+
+[[ "$vendor" == "0x8086" ]] || fail "unexpected vendor $vendor"
+[[ "$device" == "0x5786" ]] || fail "unexpected device $device"
+[[ "$subsystem_vendor" == "0x2222" ]] || fail "unexpected subsystem_vendor $subsystem_vendor"
+[[ "$subsystem_device" == "0x1111" ]] || fail "unexpected subsystem_device $subsystem_device"
+getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
+
+if [[ -e "$BRIDGE_DIR/rescan" ]]; then
+  chgrp "$GROUP_NAME" "$BRIDGE_DIR/rescan"
+  chmod 0220 "$BRIDGE_DIR/rescan"
+fi

@@ -5,3 +5,8 @@
 # plugdev so repo board gates can run without sudo.
 
 ACTION=="add|change", SUBSYSTEM=="pci", KERNEL=="0000:42:00.0", ATTR{vendor}=="0x10ee", ATTR{device}=="0x0480", ATTR{subsystem_vendor}=="0x10ee", ATTR{subsystem_device}=="0xabcd", ATTR{enable}="1", RUN+="/usr/local/libexec/task6-pcie/task6-pcie-pci-permissions %p"
+
+# The endpoint may be absent after a Thunderbolt/FPGA power-cycle. Keep the
+# fixed immediate upstream bridge rescan node delegated so the endpoint can be
+# rediscovered without global PCI rescan access.
+ACTION=="add|change", SUBSYSTEM=="pci", KERNEL=="0000:41:00.0", ATTR{vendor}=="0x8086", ATTR{device}=="0x5786", ATTR{subsystem_vendor}=="0x2222", ATTR{subsystem_device}=="0x1111", RUN+="/usr/local/libexec/task6-pcie/task6-pcie-bridge-permissions %p"
