@@ -65,6 +65,21 @@ if (( valid_identity )); then
   else
     echo "task6-pcie-pci-permissions: enable is not writable: $DEVICE_DIR/enable" >&2
   fi
+
+  bdf="$(basename "$DEVICE_DIR")"
+  if command -v /usr/bin/setpci >/dev/null 2>&1; then
+    command_value="$(/usr/bin/setpci -s "$bdf" COMMAND 2>/dev/null || true)"
+    if [[ "$command_value" =~ ^[0-9A-Fa-f]+$ ]]; then
+      command_next=$(printf "%04x" $(( 0x$command_value | 0x0002 )))
+      if ! /usr/bin/setpci -s "$bdf" COMMAND="$command_next"; then
+        echo "task6-pcie-pci-permissions: setpci COMMAND write failed for $bdf" >&2
+      fi
+    else
+      echo "task6-pcie-pci-permissions: could not read COMMAND for $bdf" >&2
+    fi
+  else
+    echo "task6-pcie-pci-permissions: missing /usr/bin/setpci" >&2
+  fi
 else
   echo "task6-pcie-pci-permissions: stale endpoint identity; delegating recovery only: $DEVICE_DIR" >&2
 fi
