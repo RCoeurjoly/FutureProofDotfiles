@@ -154,6 +154,10 @@ in {
     source = ./udev/task6-pcie-pci-permissions;
     executable = true;
   };
+  home.file.".local/share/task6-udev/task6-pcie-bridge-permissions" = {
+    source = ./udev/task6-pcie-bridge-permissions;
+    executable = true;
+  };
   home.file.".local/bin/install-task6-pcie-rules.sh" = {
     source = ./udev/install-task6-pcie-rules.sh;
     executable = true;
