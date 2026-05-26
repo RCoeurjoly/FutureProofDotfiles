@@ -149,6 +149,15 @@ in {
     source = ./scripts/adjustBrightness.sh;
     executable = true;
   };
+  home.file.".local/share/task6-udev/60-task6-ypcb-pcie.rules".source = ./udev/60-task6-ypcb-pcie.rules;
+  home.file.".local/share/task6-udev/task6-pcie-pci-permissions" = {
+    source = ./udev/task6-pcie-pci-permissions;
+    executable = true;
+  };
+  home.file.".local/bin/install-task6-pcie-rules.sh" = {
+    source = ./udev/install-task6-pcie-rules.sh;
+    executable = true;
+  };
 
   # GDM evaluates TryExec in /usr/share/xsessions as the "gdm" user.
   # Grant traverse-only ACLs so it can resolve ~/.nix-profile/bin/i3.

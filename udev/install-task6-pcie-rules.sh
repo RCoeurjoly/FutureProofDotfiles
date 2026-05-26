@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-RULE_SRC="$ROOT/udev/60-task6-ypcb-pcie.rules"
-HELPER_SRC="$ROOT/udev/task6-pcie-pci-permissions"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+if [[ -f "$SCRIPT_DIR/60-task6-ypcb-pcie.rules" ]]; then
+  SOURCE_DIR="$SCRIPT_DIR"
+elif [[ -f "$SCRIPT_DIR/../share/task6-udev/60-task6-ypcb-pcie.rules" ]]; then
+  SOURCE_DIR="$(cd "$SCRIPT_DIR/../share/task6-udev" && pwd)"
+else
+  echo "Could not find Task 6 PCIe udev payload next to $0 or in ../share/task6-udev" >&2
+  exit 1
+fi
+
+RULE_SRC="$SOURCE_DIR/60-task6-ypcb-pcie.rules"
+HELPER_SRC="$SOURCE_DIR/task6-pcie-pci-permissions"
 RULE_DST="/etc/udev/rules.d/60-task6-ypcb-pcie.rules"
 HELPER_DST="/usr/local/libexec/task6-pcie/task6-pcie-pci-permissions"
 
