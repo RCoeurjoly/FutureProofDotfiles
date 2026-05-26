@@ -40,3 +40,20 @@ getent group "$GROUP_NAME" >/dev/null || fail "missing group: $GROUP_NAME"
 
 chgrp "$GROUP_NAME" "$DEVICE_DIR/resource0"
 chmod 0660 "$DEVICE_DIR/resource0"
+
+# Reprogramming the FPGA replaces the PCIe endpoint behind the host's current
+# sysfs device. Delegate narrowly scoped recovery nodes for this matched
+# endpoint and its immediate upstream bridge; do not expose config space or
+# global PCI rescans.
+for attr in remove rescan reset; do
+  if [[ -e "$DEVICE_DIR/$attr" ]]; then
+    chgrp "$GROUP_NAME" "$DEVICE_DIR/$attr"
+    chmod 0220 "$DEVICE_DIR/$attr"
+  fi
+done
+
+PARENT_DIR="$(dirname "$DEVICE_DIR")"
+if [[ -e "$PARENT_DIR/rescan" ]]; then
+  chgrp "$GROUP_NAME" "$PARENT_DIR/rescan"
+  chmod 0220 "$PARENT_DIR/rescan"
+fi
