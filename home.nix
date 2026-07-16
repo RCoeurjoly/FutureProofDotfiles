@@ -124,6 +124,10 @@ in {
         path = "${config.home.homeDirectory}/Exocortex";
         uri = "git@github.com:RCoeurjoly/Exocortex.git";
       };
+      LLM-inference-on-FPGA-papers = {
+        path = "${config.home.homeDirectory}/LLM-inference-on-FPGA-papers";
+        uri = "git@github.com:RCoeurjoly/LLM-inference-on-FPGA-papers.git";
+      };
     };
   };
 
