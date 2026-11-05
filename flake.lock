@@ -57,6 +57,22 @@
         "type": "github"
       }
     },
+    "lean4-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793422248,
+        "narHash": "sha256-Zn2f98bm9tykyg/T0TfP+KbiI+OVCT636anJ2+zkCuA=",
+        "owner": "leanprover-community",
+        "repo": "lean4-mode",
+        "rev": "32daa3e56120e6bfc88fcdfa297c4af04b3c08b0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "leanprover-community",
+        "repo": "lean4-mode",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1781577229,
@@ -110,6 +126,7 @@
         "emacs-overlay": "emacs-overlay",
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
+        "lean4-mode": "lean4-mode",
         "nixpkgs": "nixpkgs_2"
       }
     },

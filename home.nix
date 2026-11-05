@@ -14,6 +14,7 @@ in {
   home.packages = [
     pkgs.brightnessctl
     pkgs.diff-so-fancy
+    pkgs.elan
     pkgs.git-sync
     pkgs.dmenu
     pkgs.gnome-screenshot

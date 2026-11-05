@@ -1,5 +1,16 @@
 nix run . -- --load init.el
 
+Lean 4 support includes =lean4-mode= and =elan= (with =lean= and =lake=).
+For standalone files, select a default toolchain once:
+
+  nix develop
+  elan default leanprover/lean4:stable
+
+Projects with a =lean-toolchain= file select their own version automatically.
+Open a =.lean= file in Emacs; =C-c C-i= toggles proof goals and diagnostics,
+and =C-c C-p C-l= builds the project with Lake.
+See [[https://github.com/leanprover-community/lean4-mode][lean4-mode]] and [[https://github.com/leanprover/elan][elan]] for details.
+
 To install a GDM session entry for Home Manager i3 on Ubuntu:
 
 sudo ./scripts/install-gdm-i3-session.sh roland

@@ -5,6 +5,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     emacs-overlay.url = "github:nix-community/emacs-overlay";
     flake-utils.url = "github:numtide/flake-utils";
+    lean4-mode = {
+      url = "github:leanprover-community/lean4-mode";
+      flake = false;
+    };
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -56,10 +60,20 @@
           eglot
           rust-mode
           pkgs.rust-analyzer
+          (trivialBuild {
+            pname = "lean4-mode";
+            version = "unstable-${inputs.lean4-mode.shortRev}";
+            src = inputs.lean4-mode;
+            packageRequires = [ compat dash lsp-mode magit-section ];
+            postInstall = ''
+              cp -r data $out/share/emacs/site-lisp/
+            '';
+          })
+          pkgs.elan
         ]);
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright pkgs.rust-analyzer ];
+          buildInputs = [ myEmacs pkgs.gnuplot pkgs.python3 pkgs.pyright pkgs.rust-analyzer pkgs.elan ];
         };
 
         # Define the application

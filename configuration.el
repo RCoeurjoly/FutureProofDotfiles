@@ -385,6 +385,16 @@
 (with-eval-after-load (quote eglot)
   (add-to-list (quote eglot-server-programs) (quote (rust-mode . ("rust-analyzer")))))
 
+(use-package lean4-mode
+  :mode ("\\.lean\\'" . lean4-mode)
+  :commands lean4-mode
+  :config
+  (defun my/lean4-server-command ()
+    "Start Lake without synchronously probing or installing a toolchain."
+    (list (lean4-get-executable lean4-lake-name) "serve"))
+  ;; Upstream's `lake --version' probe can block on an elan download.
+  (advice-add 'lean4--server-cmd :override #'my/lean4-server-command))
+
 ;; This doesn't work in Ubuntu
 (autoload 'arduino-mode "arduino-mode" "Arduino mode" t )
 (add-hook 'arduino-mode-hook
